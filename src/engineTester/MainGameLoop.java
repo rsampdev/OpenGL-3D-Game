@@ -18,6 +18,8 @@ import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import terrains.Terrain;
 import textures.ModelTexture;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 import textures.Textures;
 
 public class MainGameLoop {
@@ -29,6 +31,13 @@ public class MainGameLoop {
 		List<Entity> entities = new ArrayList<Entity>();
 		List<Terrain> terrains = new ArrayList<Terrain>();
 		
+		TerrainTexture backgroundTexture = new TerrainTexture(Textures.TM_GRASS.getID());
+		TerrainTexture rTexture = new TerrainTexture(Textures.TM_MUD.getID());
+		TerrainTexture gTexture = new TerrainTexture(Textures.TM_GRASS_RED_FLOWERS.getID());
+		TerrainTexture bTexture = new TerrainTexture(Textures.TM_PATH.getID());
+		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+		TerrainTexture blendMap = new TerrainTexture(Textures.TM_BLEND_MAP.getID());
+		
 		ModelData data = OBJFileLoader.loadOBJ("models/dragon/model");
 		RawModel model = loader.loadToVAO(data.getVertices(), data.getTextureCoords(), data.getNormals(), data.getIndices());
 		ModelTexture texture = new ModelTexture(loader.loadTexture("models/dragon/texture"));
@@ -39,15 +48,8 @@ public class MainGameLoop {
 		Entity entity = new Entity(texturedModel, new Vector3f(0, 0, -25), 0, 0, 0, 1);
 		entities.add(entity);
 		
-		Terrain terrain1 = new Terrain(-1, -1, loader, Textures.MINECRAFT_DIAMOND_ORE);
-		Terrain terrain2 = new Terrain(0, -1, loader, Textures.MINECRAFT_IRON_BLOCK);
-		Terrain terrain3 = new Terrain(-1, 0, loader, Textures.MINECRAFT_GOLD_BLOCK);
-		Terrain terrain4 = new Terrain(0, 0, loader, Textures.MINECRAFT_GLASS_BLOCK);
-		terrain4.getTexture().setHasTransparency(true);
+		Terrain terrain1 = new Terrain(-0.5f, -0.5f, loader, texturePack, blendMap);
 		terrains.add(terrain1);
-		terrains.add(terrain2);
-		terrains.add(terrain3);
-		terrains.add(terrain4);
 
 		Light light = new Light(new Vector3f(0, 0, -20), new Vector3f(1, 1, 1));
 		Camera camera = new Camera();

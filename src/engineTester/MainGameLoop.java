@@ -27,6 +27,9 @@ public class MainGameLoop {
         
 		RawModel model = OBJLoader.loadObjModel("models/dragon/model", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("models/dragon/texture"));
+		texture.setShineDamper(10);
+		texture.setReflectivity(1);
+		
 		TexturedModel texturedModel = new TexturedModel(model, texture);
 		Entity entity = new Entity(texturedModel, new Vector3f(0, 0, -25), 0, 0, 0, 1);
 		
@@ -34,7 +37,7 @@ public class MainGameLoop {
         Camera camera = new Camera();
         
         while(!Display.isCloseRequested()){
-            entity.increaseRotation(0, 1, 0);
+            entity.increaseRotation(0, 0, 0);
             camera.move();
             renderer.prepare();
             shader.start();

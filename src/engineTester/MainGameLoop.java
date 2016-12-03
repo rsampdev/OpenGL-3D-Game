@@ -31,16 +31,17 @@ public class MainGameLoop {
 		RawModel model = OBJLoader.loadObjModel("models/dragon/model", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("models/dragon/texture"));
 		texture.setShineDamper(10);
-		texture.setReflectivity(1);
+		texture.setReflectivity(10);
 
 		TexturedModel texturedModel = new TexturedModel(model, texture);
 		Entity entity = new Entity(texturedModel, new Vector3f(0, 0, -25), 0, 0, 0, 1);
 		entities.add(entity);
 		
-		Terrain terrain1 = new Terrain(-1, -1, loader, Textures.MINECRAFT_GOLD_BLOCK);
-		Terrain terrain2 = new Terrain(0, -1, loader, Textures.MINECRAFT_GOLD_BLOCK);
+		Terrain terrain1 = new Terrain(-1, -1, loader, Textures.MINECRAFT_DIAMOND_ORE);
+		Terrain terrain2 = new Terrain(0, -1, loader, Textures.MINECRAFT_IRON_BLOCK);
 		Terrain terrain3 = new Terrain(-1, 0, loader, Textures.MINECRAFT_GOLD_BLOCK);
-		Terrain terrain4 = new Terrain(0, 0, loader, Textures.MINECRAFT_GOLD_BLOCK);
+		Terrain terrain4 = new Terrain(0, 0, loader, Textures.MINECRAFT_GLASS_BLOCK);
+		terrain4.getTexture().setHasTransparency(true);
 		terrains.add(terrain1);
 		terrains.add(terrain2);
 		terrains.add(terrain3);

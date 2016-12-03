@@ -11,10 +11,11 @@ import entities.Entity;
 import entities.Light;
 import models.RawModel;
 import models.TexturedModel;
+import objConverter.ModelData;
+import objConverter.OBJFileLoader;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
-import renderEngine.OBJLoader;
 import terrains.Terrain;
 import textures.ModelTexture;
 import textures.Textures;
@@ -27,8 +28,9 @@ public class MainGameLoop {
 		Loader loader = new Loader();
 		List<Entity> entities = new ArrayList<Entity>();
 		List<Terrain> terrains = new ArrayList<Terrain>();
-
-		RawModel model = OBJLoader.loadObjModel("models/dragon/model", loader);
+		
+		ModelData data = OBJFileLoader.loadOBJ("models/dragon/model");
+		RawModel model = loader.loadToVAO(data.getVertices(), data.getTextureCoords(), data.getNormals(), data.getIndices());
 		ModelTexture texture = new ModelTexture(loader.loadTexture("models/dragon/texture"));
 		texture.setShineDamper(10);
 		texture.setReflectivity(10);

@@ -46,23 +46,22 @@ public class MainGameLoop {
 		texture.setReflectivity(10);
 
 		TexturedModel texturedModel = new TexturedModel(model, texture);
-		Entity entity = new Entity(texturedModel, new Vector3f(0, 0, -25), 0, 0, 0, 1);
+		Entity entity = new Entity(texturedModel, new Vector3f(0, 0, 0), 0, 0, 0, 1);
 		entities.add(entity);
 		
-		ModelData playerData = OBJFileLoader.loadOBJ("tm/bunny");
+		ModelData playerData = OBJFileLoader.loadOBJ("tm/player");
 		RawModel playerModel = loader.loadToVAO(playerData.getVertices(), playerData.getTextureCoords(), playerData.getNormals(), playerData.getIndices());
-		ModelTexture playerTexture = new ModelTexture(loader.loadTexture("tm/white"));
+		ModelTexture playerTexture = new ModelTexture(loader.loadTexture("tm/playerTexture"));
 		playerTexture.setShineDamper(1.0f);
-		playerTexture.setReflectivity(1.0f);
 		TexturedModel playerTexturedModel = new TexturedModel(playerModel, playerTexture);
-		Player player = new Player(playerTexturedModel, new Vector3f(0, 0, -15), 0, 0, 0, 1);
+		Player player = new Player(playerTexturedModel, new Vector3f(0, 0, -25), 0, 0, 0, 0.25f);
 		entities.add(player);
 		
 		Terrain terrain = new Terrain(-0.5f, -0.5f, loader, texturePack, blendMap);
 		terrains.add(terrain);
 
 		Light light = new Light(new Vector3f(0, 0, -20), new Vector3f(1, 1, 1));
-		Camera camera = new Camera(new Vector3f(0, 5, 15), 0, 0, 0);
+		Camera camera = new Camera(player);
 		
 		MasterRenderer renderer = new MasterRenderer();
 

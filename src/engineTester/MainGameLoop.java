@@ -57,7 +57,7 @@ public class MainGameLoop {
 		Player player = new Player(playerTexturedModel, new Vector3f(0, 0, -25), 0, 0, 0, 0.25f);
 		entities.add(player);
 		
-		Terrain terrain = new Terrain(-0.5f, -0.5f, loader, texturePack, blendMap);
+		Terrain terrain = new Terrain(-0.5f, -0.5f, loader, texturePack, blendMap, "tm/heightMap");
 		terrains.add(terrain);
 
 		Light light = new Light(new Vector3f(0, 0, -20), new Vector3f(1, 1, 1));

@@ -1,6 +1,5 @@
 package entities;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
@@ -10,53 +9,23 @@ public class Camera {
 	private float yaw = 0;
 	private float roll = 0;
 	
+	public Camera() {
+		super();
+	}
+	
+	public Camera(Vector3f position) {
+		this.position = position;
+	}
+	
+	public Camera(Vector3f position, float pitch, float yaw, float roll) {
+		this.position = position;
+		this.pitch = pitch;
+		this.yaw = yaw;
+		this.roll = roll;
+	}
+	
 	public void move() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			position.z -= 0.05f;
-		}
 		
-		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			position.x -=  0.05f;
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			position.z +=  0.05f;
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			position.x +=  0.05f;
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			position.y +=  0.05f;
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_F)) {
-			position.y -=  0.05f;
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-			pitch -= 0.5f;
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-			pitch += 0.5f;
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-			yaw -= 0.5f;
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-			yaw += 0.5f;
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)) {
-			position = new Vector3f(0, 0, 0);
-			pitch = 0;
-			yaw = 0;
-			roll = 0;
-		}
 	}
 
 	public Vector3f getPosition() {

@@ -39,6 +39,9 @@ public class MainGameLoop {
 		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 		TerrainTexture blendMap = new TerrainTexture(Textures.TM_BLEND_MAP.getID());
 		
+		Terrain terrain = new Terrain(-0.5f, -0.5f, loader, texturePack, blendMap, "tm/heightMap");
+		terrains.add(terrain);
+		
 		ModelData data = OBJFileLoader.loadOBJ("models/dragon/model");
 		RawModel model = loader.loadToVAO(data.getVertices(), data.getTextureCoords(), data.getNormals(), data.getIndices());
 		ModelTexture texture = new ModelTexture(loader.loadTexture("models/dragon/texture"));
@@ -46,7 +49,7 @@ public class MainGameLoop {
 		texture.setReflectivity(10);
 
 		TexturedModel texturedModel = new TexturedModel(model, texture);
-		Entity entity = new Entity(texturedModel, new Vector3f(0, 0, 0), 0, 0, 0, 1);
+		Entity entity = new Entity(texturedModel, new Vector3f(0, terrain.getHeightOfTerrain(0, 0), 0), 0, 0, 0, 1);
 		entities.add(entity);
 		
 		ModelData playerData = OBJFileLoader.loadOBJ("tm/player");
@@ -54,11 +57,8 @@ public class MainGameLoop {
 		ModelTexture playerTexture = new ModelTexture(loader.loadTexture("tm/playerTexture"));
 		playerTexture.setShineDamper(1.0f);
 		TexturedModel playerTexturedModel = new TexturedModel(playerModel, playerTexture);
-		Player player = new Player(playerTexturedModel, new Vector3f(0, 0, -25), 0, 0, 0, 0.25f);
+		Player player = new Player(playerTexturedModel, new Vector3f(0, terrain.getHeightOfTerrain(0, -25), -25), 0, 0, 0, 0.25f);
 		entities.add(player);
-		
-		Terrain terrain = new Terrain(-0.5f, -0.5f, loader, texturePack, blendMap, "tm/heightMap");
-		terrains.add(terrain);
 
 		Light light = new Light(new Vector3f(0, 0, -20), new Vector3f(1, 1, 1));
 		Camera camera = new Camera(player);
@@ -66,8 +66,8 @@ public class MainGameLoop {
 		MasterRenderer renderer = new MasterRenderer();
 
 		while (!Display.isCloseRequested()) {
+			player.move(terrains);
 			camera.move();
-			player.move();
 			
 			for (Terrain t : terrains) {
 				renderer.processTerrain(t);
